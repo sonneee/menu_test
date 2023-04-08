@@ -1,0 +1,28 @@
+{% load static %}
+{% load filter %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}"> 
+
+<nav>
+  <ul class="topmenu">
+    <li><a href="" class="active">{{menu_name}}<span class="fa fa-angle-down"></span></a>
+    <ul class="submenu">
+    {% for menu_item, num in menu_items %}
+      {% if not forloop.first %}
+        {% if num > menu_items|call:forloop.counter0 %}
+          <ul class="submenu">
+        {% elif num < menu_items|call:forloop.counter0 %}
+          {% for i in menu_items|call:forloop.counter0|times:num %}
+          </ul>
+          {% endfor %}
+        {% endif %}
+      {% endif %}
+      <li><a href="{{menu_item.slug}}" class="active">{{menu_item.name}}<span class="fa fa-angle-down"></span></a>
+        {% if forloop.last %}
+        {% for i in num|times:0 %}
+          </ul>
+        {% endfor %}
+        {% endif %}
+    {% endfor %}
+    </ul>
+    </ul>
+</nav>
